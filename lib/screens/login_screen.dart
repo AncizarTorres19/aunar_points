@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print('Username: $username');
     print('Password: $password');
     // Verificar si las credenciales son válidas (aquí simplemente estamos comprobando si coinciden con los valores esperados)
-    if (username == 'ancizar' && password == '12345') {
+    if (username == 'Ancizar Torres' && password == '12345') {
       // Si las credenciales son válidas, navegar al HomeScreen
       Navigator.pushReplacement(
         context,
