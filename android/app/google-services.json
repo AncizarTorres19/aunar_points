@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "319153694445",
+    "project_id": "aunar-points",
+    "storage_bucket": "aunar-points.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319153694445:android:edb27ef8b36310369a4ee4",
+        "android_client_info": {
+          "package_name": "com.example.aunar_points"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM0742sHykwJae58QCtJoGtsGA2FIYLyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
