@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Definición de la clase Evento
 class Evento {
   final String nombre;
   final String lugar;

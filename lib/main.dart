@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:aunar_points/screens/login_screen.dart';
 
+// TODO: Implementar la conexión con Firebase
 // void main() {
 //   // WidgetsFlutterBinding.ensureInitialized();
 //   // Firebase.initializeApp().then((value) {
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        // debugShowCheckedModeBanner: false, home: LoginScreen());
         debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }

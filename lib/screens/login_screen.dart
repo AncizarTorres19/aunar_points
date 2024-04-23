@@ -10,12 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  //   // @override
-//   // void initState() {
-//   //   // TODO: implement initState
-//   //   super.initState();
-//   // }
-
+// TODO: Implementar la autenticación con Firebase
 //   // void getUsers() async {
 //   //     CollectionReference viewCollection = FirebaseFirestore.instance.collection('users');
 //   //     QuerySnapshot viewUsers = await viewCollection.get();
@@ -44,14 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() {
-    // Obtén los valores de usuario y contraseña de los controladores
     String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
-    print('Username: $username');
-    print('Password: $password');
-    // Verificar si las credenciales son válidas (aquí simplemente estamos comprobando si coinciden con los valores esperados)
     if (username == 'Ancizar Torres' && password == '12345') {
-      // Si las credenciales son válidas, navegar al HomeScreen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -59,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
-      // Si las credenciales no son válidas, mostrar un mensaje de error
       showDialog(
         context: context,
         builder: (BuildContext context) {
