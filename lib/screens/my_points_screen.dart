@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 // Método para calcular el total de puntos
-// int calcularTotalPuntos(List<Map<String, dynamic>> transacciones) {
-//   return transacciones.fold<int>(
+// int calcularTotalPuntos(List<Map<String, dynamic>> pointsTransactions) {
+//   return pointsTransactions.fold<int>(
 //     0,
 //     (total, transaccion) => total + int.parse(transaccion['Puntos'] ?? 0),
 //   );
 // }
 
 class MyPointsScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> transacciones = [
+  final List<Map<String, dynamic>> pointsTransactions = [
     {'Fecha': '01/03/2024', 'Descripción': 'Compra de libros', 'Puntos': 20},
     {
       'Fecha': '05/03/2024',
@@ -28,7 +28,7 @@ class MyPointsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // int totalPuntos =
-    //     calcularTotalPuntos(transacciones);
+    //     calcularTotalPuntos(pointsTransactions);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +49,7 @@ class MyPointsScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            for (var transaccion in transacciones)
+            for (var transaccion in pointsTransactions)
               Card(
                 child: ListTile(
                   title: Text(transaccion['Descripción']),

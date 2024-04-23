@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContactWellbeingScreen extends StatelessWidget {
-  final List<Map<String, String>> contactos = [
+  final List<Map<String, String>> contacts = [
     {'Nombre': 'Contacto de Bienestar', 'Número': '123456789'},
     {'Nombre': 'Contacto de Psicología', 'Número': '987654321'},
     {'Nombre': 'Contacto de Área Musical', 'Número': '123456789'},
@@ -20,7 +20,7 @@ class ContactWellbeingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (var contacto in contactos)
+            for (var contacto in contacts)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
