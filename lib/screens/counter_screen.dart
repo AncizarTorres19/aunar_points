@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen({Key? key}) : super(key: key);
@@ -8,6 +9,23 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void getUsers() async {
+      CollectionReference viewCollection = FirebaseFirestore.instance.collection('users');
+      QuerySnapshot viewUsers = await viewCollection.get();
+
+      if (viewUsers.docs.isNotEmpty) {
+        for (var doc in viewUsers.docs) {
+          print(doc.data());
+        }
+      }
+  }
+
   int besitos = 0;
 
   void increase() {

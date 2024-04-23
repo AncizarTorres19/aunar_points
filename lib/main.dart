@@ -1,6 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:aunar_points/screens/counter_screen.dart';
+import 'package:aunar_points/screens/login_screen.dart';
+
+// void main() {
+//   // WidgetsFlutterBinding.ensureInitialized();
+//   // Firebase.initializeApp().then((value) {
+//   //   print('Firebase Initialized');
+//   // });
+//   runApp(const MyApp());
+// }
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +21,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: CounterScreen());
+        debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }
