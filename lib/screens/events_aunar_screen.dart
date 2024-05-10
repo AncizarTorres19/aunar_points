@@ -1,54 +1,9 @@
+import 'package:aunar_points/class/envent.dart';
+import 'package:aunar_points/services/events_service.dart';
 import 'package:flutter/material.dart';
 
-class Evento {
-  final String nombre;
-  final String lugar;
-  final String fecha;
-  final String hora;
-  final int puntos;
-
-  Evento({
-    required this.nombre,
-    required this.lugar,
-    required this.fecha,
-    required this.hora,
-    required this.puntos,
-  });
-}
-
 class EventsAunarScreen extends StatelessWidget {
-  final List<Evento> eventos = [
-    Evento(
-      nombre: 'Evento 1',
-      lugar: 'Lugar 1',
-      fecha: '01/01/2023',
-      hora: '10:00 AM',
-      puntos: 5,
-    ),
-    Evento(
-      nombre: 'Evento 2',
-      lugar: 'Lugar 2',
-      fecha: '02/02/2023',
-      hora: '11:00 AM',
-      puntos: 10,
-    ),
-    Evento(
-      nombre: 'Evento 3',
-      lugar: 'Lugar 3',
-      fecha: '02/02/2023',
-      hora: '11:00 AM',
-      puntos: 40,
-    ),
-    Evento(
-      nombre: 'Evento 4',
-      lugar: 'Lugar 4',
-      fecha: '02/02/2023',
-      hora: '11:00 AM',
-      puntos: 2,
-    ),
-  ];
-
-  EventsAunarScreen({super.key});
+  const EventsAunarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +13,26 @@ class EventsAunarScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: eventos.map((evento) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: EventoCard(evento: evento),
+        child: FutureBuilder<List<Evento>>(
+          future: getEvents(),
+          builder: (context, AsyncSnapshot<List<Evento>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.hasError) {
+              return const Text('Error al cargar los eventos');
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (var evento in snapshot.data!)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: EventoCard(evento: evento),
+                  ),
+              ],
             );
-          }).toList(),
+          },
         ),
       ),
     );

@@ -1,21 +1,37 @@
+import 'package:aunar_points/services/points_transactions_service.dart';
 import 'package:flutter/material.dart';
 
-class MyPointsScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> pointsTransactions = [
-    {'Fecha': '01/03/2024', 'Descripción': 'Compra de libros', 'Puntos': 20},
-    {
-      'Fecha': '05/03/2024',
-      'Descripción': 'Asistencia al evento',
-      'Puntos': 10
-    },
-    {
-      'Fecha': '10/03/2024',
-      'Descripción': 'Participación en encuesta',
-      'Puntos': 5
-    },
-  ];
+class MyPointsScreen extends StatefulWidget {
+  const MyPointsScreen({Key? key}) : super(key: key);
 
-  MyPointsScreen({super.key});
+  @override
+  _MyPointsScreenState createState() => _MyPointsScreenState();
+}
+
+class _MyPointsScreenState extends State<MyPointsScreen> {
+  List<Map<String, dynamic>> pointsTransactions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Llama a la función getPointsTransactions() al iniciar la pantalla
+    _loadPointsTransactions();
+  }
+
+  Future<void> _loadPointsTransactions() async {
+    try {
+      // Obtén las transacciones de puntos desde Firestore
+      List<Map<String, dynamic>> transactions = await getPointsTransactions();
+      setState(() {
+        // Actualiza el estado de las transacciones de puntos
+        pointsTransactions = transactions;
+      });
+    } catch (e) {
+      // Maneja cualquier error que pueda ocurrir al cargar las transacciones de puntos
+      print("Error al obtener las transacciones de puntos: $e");
+      // Puedes mostrar un mensaje de error al usuario si lo deseas
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
