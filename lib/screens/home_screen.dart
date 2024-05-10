@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:aunar_points/screens/my_points_screen.dart';
 import 'package:aunar_points/screens/events_aunar_screen.dart';
@@ -7,7 +8,7 @@ import 'package:aunar_points/screens/login_screen.dart';
 class HomeScreen extends StatefulWidget {
   final String username;
 
-  const HomeScreen({Key? key, required this.username}) : super(key: key);
+  const HomeScreen({Key? key, required this.username, User? user}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     MyPointsScreen(),
     EventsAunarScreen(),
-    ContactWellbeingScreen(),
+    const ContactWellbeingScreen(),
   ];
 
   void _onItemTapped(int index) {

@@ -1,18 +1,14 @@
-// import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:aunar_points/screens/login_screen.dart';
 
-// TODO: Implementar la conexión con Firebase
-// void main() {
-//   // WidgetsFlutterBinding.ensureInitialized();
-//   // Firebase.initializeApp().then((value) {
-//   //   print('Firebase Initialized');
-//   // });
-//   runApp(const MyApp());
-// }
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

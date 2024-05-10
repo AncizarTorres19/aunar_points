@@ -1,6 +1,6 @@
 import 'package:aunar_points/screens/home_screen.dart';
+import 'package:aunar_points/services/auth_service.dart';
 import 'package:flutter/material.dart';
-// // import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,17 +10,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-// TODO: Implementar la autenticación con Firebase
-//   // void getUsers() async {
-//   //     CollectionReference viewCollection = FirebaseFirestore.instance.collection('users');
-//   //     QuerySnapshot viewUsers = await viewCollection.get();
-
-//   //     if (viewUsers.docs.isNotEmpty) {
-//   //       for (var doc in viewUsers.docs) {
-//   //         print(doc.data());
-//   //       }
-//   //     }
-//   // }
   late TextEditingController _usernameController;
   late TextEditingController _passwordController;
 
@@ -38,17 +27,23 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() {
+  Future<void> _login() async {
     String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
-    if (username == 'Ancizar Torres' && password == '12345') {
+    try {
+      // Llama a la función signIn con los datos ingresados
+      await signIn(username, password);
+      // Si el inicio de sesión tiene éxito, navega a la pantalla de inicio
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(username: username),
+          builder: (BuildContext context) => HomeScreen(username: username),
         ),
       );
-    } else {
+    } catch (e) {
+      // Si ocurre un error durante el inicio de sesión, muestra un diálogo de error
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -114,7 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _login,
+                onPressed:
+                    _login, // Llama a la función _login al presionar el botón
                 child: const Text('Iniciar sesión'),
               ),
             ],
