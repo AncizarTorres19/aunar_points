@@ -1,6 +1,8 @@
-import 'package:aunar_points/screens/home_screen.dart';
-import 'package:aunar_points/services/auth_service.dart';
 import 'package:flutter/material.dart';
+// Screens
+import 'package:aunar_points/screens/home_screen.dart';
+// Services
+import 'package:aunar_points/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,30 +12,33 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController _usernameController;
+  late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _usernameController = TextEditingController();
+    _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
   Future<void> _login() async {
-    String username = _usernameController.text.trim();
+    if (_isLoading) return; // Evita envíos múltiples
+    setState(() {
+      _isLoading = true;
+    });
+    String username = _emailController.text.trim();
     String password = _passwordController.text.trim();
     try {
-      // Llama a la función signIn con los datos ingresados
       await signIn(username, password);
-      // Si el inicio de sesión tiene éxito, navega a la pantalla de inicio
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
@@ -62,6 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
       );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -92,9 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: _usernameController,
+                controller: _emailController,
                 decoration: const InputDecoration(
-                  labelText: 'Usuario',
+                  labelText: 'Correo electrónico',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -109,9 +118,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed:
-                    _login, // Llama a la función _login al presionar el botón
-                child: const Text('Iniciar sesión'),
+                onPressed: _isLoading
+                    ? null
+                    : _login, // Deshabilita el botón mientras se carga
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text('Iniciar sesión'),
               ),
             ],
           ),

@@ -1,5 +1,7 @@
-import 'package:aunar_points/services/points_transactions_service.dart';
+import 'package:aunar_points/class/transaction.dart';
 import 'package:flutter/material.dart';
+// Services
+import 'package:aunar_points/services/points_transactions_service.dart';
 
 class MyPointsScreen extends StatefulWidget {
   const MyPointsScreen({Key? key}) : super(key: key);
@@ -9,27 +11,28 @@ class MyPointsScreen extends StatefulWidget {
 }
 
 class _MyPointsScreenState extends State<MyPointsScreen> {
-  List<Map<String, dynamic>> pointsTransactions = [];
+  List<CustomTransaction> pointsTransactions = [];
+  bool _isLoading = true;
+  int totalPoints = 0; // Variable para almacenar la suma de puntos
 
   @override
   void initState() {
     super.initState();
-    // Llama a la función getPointsTransactions() al iniciar la pantalla
     _loadPointsTransactions();
   }
 
   Future<void> _loadPointsTransactions() async {
     try {
-      // Obtén las transacciones de puntos desde Firestore
-      List<Map<String, dynamic>> transactions = await getPointsTransactions();
+      List<CustomTransaction> transactions = await getPointsTransactions();
       setState(() {
-        // Actualiza el estado de las transacciones de puntos
         pointsTransactions = transactions;
+        _isLoading = false;
+        // Calculamos la suma de puntos
+        totalPoints = pointsTransactions.fold(
+            0, (prev, element) => prev + element.puntos);
       });
     } catch (e) {
-      // Maneja cualquier error que pueda ocurrir al cargar las transacciones de puntos
       print("Error al obtener las transacciones de puntos: $e");
-      // Puedes mostrar un mensaje de error al usuario si lo deseas
     }
   }
 
@@ -44,9 +47,9 @@ class _MyPointsScreenState extends State<MyPointsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Total de Puntos: 35',
-              style: TextStyle(fontSize: 30),
+            Text(
+              'Total de Puntos: $totalPoints',
+              style: const TextStyle(fontSize: 30),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -54,14 +57,21 @@ class _MyPointsScreenState extends State<MyPointsScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            for (var transaccion in pointsTransactions)
-              Card(
-                child: ListTile(
-                  title: Text(transaccion['Descripción']),
-                  subtitle: Text('Fecha: ${transaccion['Fecha']}'),
-                  trailing: Text('+${transaccion['Puntos']} puntos'),
-                ),
-              ),
+            _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Column(
+                    children: [
+                      for (var transaccion in pointsTransactions)
+                        Card(
+                          child: ListTile(
+                            title:
+                                Text('Descripción: ${transaccion.descripcion}'),
+                            subtitle: Text('Fecha: ${transaccion.fecha}'),
+                            trailing: Text('+${transaccion.puntos} puntos'),
+                          ),
+                        ),
+                    ],
+                  ),
           ],
         ),
       ),
