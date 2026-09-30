@@ -25,7 +25,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.19.6
+          flutter-version: 3.16.9  # Dart 3.2, la que exige el pubspec.lock
           channel: stable
 
       - run: flutter pub get
